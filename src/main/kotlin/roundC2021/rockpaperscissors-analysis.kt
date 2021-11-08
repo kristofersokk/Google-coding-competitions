@@ -3,7 +3,7 @@ package roundC2021
 import kotlin.random.Random.Default.nextDouble
 
 fun main() {
-    prod()
+//    prod()
 //    test(40, 40)
 //    test(40, 20)
 //    test(40, 4)
@@ -13,6 +13,7 @@ fun main() {
 //    testSequence(seq1, 40, 20)
 //    testSequence(seq1, 40, 4)
 //    testSequence(seq1, 40, 0)
+    printSequences()
 }
 
 private fun prod() {
@@ -20,16 +21,26 @@ private fun prod() {
     readLine()
     (1..days).forEach { dayIndex ->
         val (W, E) = readLine()!!.split(" ").map { it.toInt() }
-        val chance = when (E) {
-            W -> 0.168
-            W / 2 -> 0.522
-            W / 10 -> 0.668
-            0 -> 0.816
-            else -> 0.5
-        }
+        val chance = getChance(W, E)
         val (mySequence) = calculateSequencesFromChanceLimit(chance)
 //        val mySequence = RPS.getListFromString("RSP".repeat(20))
         println("Case #$dayIndex: ${mySequence.joinToString("")}")
+    }
+}
+
+private fun getChance(W: Int, E: Int) = when (E) {
+    W -> 0.168
+    W / 2 -> 0.522
+    W / 10 -> 0.668
+    0 -> 0.816
+    else -> 0.5
+}
+
+private fun printSequences() {
+    intArrayOf(40, 20, 4, 0).forEach {
+        val (mySequence) = calculateSequencesFromChanceLimit(getChance(40, it))
+        println("E: $it")
+        println(mySequence.joinToString(separator = ""))
     }
 }
 
